@@ -12,7 +12,7 @@ License URI:		http://www.gnu.org/licenses/gpl-2.0.txt
  
 */
 
-define("PMPRO_EXAMPLEGATEWAY_DIR", dirname(__FILE__));
+define("PMPRO_PAYZAGATEWAY_DIR", dirname(__FILE__));
 
 //load payment gateway class
-require_once(PMPRO_PAYZAGATEWAY_DIR . "/classes/class.pmprogateway_payza.php");
+require_once(dirname(__FILE__) . "/classes/class.pmprogateway_payza.php");
