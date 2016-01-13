@@ -75,11 +75,12 @@
 				'sslseal',
 				'nuclear_HTTPS',
 				'gateway_environment',
+				'payza_merchantid',
+				'payza_securitycode',
 				'currency',
 				'use_ssl',
 				'tax_state',
-				'tax_rate',
-				'accepted_credit_cards'
+				'tax_rate',				
 			);
 
 			return $options;
@@ -93,10 +94,10 @@
 		static function pmpro_payment_options($options)
 		{
 			//get payza options
-			$example_options = PMProGateway_payza::getGatewayOptions();
+			$payza_options = PMProGateway_payza::getGatewayOptions();
 
 			//merge with others.
-			$options = array_merge($example_options, $options);
+			$options = array_merge($payza_options, $options);
 
 			return $options;
 		}
@@ -109,14 +110,28 @@
 		static function pmpro_payment_option_fields($values, $gateway)
 		{
 		?>
-		<tr class="pmpro_settings_divider gateway gateway_example" <?php if($gateway != "payza") { ?>style="display: none;"<?php } ?>>
+		<tr class="pmpro_settings_divider gateway gateway_payza" <?php if($gateway != "payza") { ?>style="display: none;"<?php } ?>>
 			<td colspan="2">
 				<?php _e('payza Settings', 'pmpro'); ?>
 			</td>
 		</tr>
-		<tr class="gateway gateway_example" <?php if($gateway != "payza") { ?>style="display: none;"<?php } ?>>
+		<tr class="gateway gateway_payza" <?php if($gateway != "payza") { ?>style="display: none;"<?php } ?>>
 			<?php // payza custom pamyment settings here ?>
+		<th scope="row" valign="top">
+				<label for="payza_merchantid"><?php _e('Merchant ID', 'pmpro');?>:</label>
+			</th>
+			<td>
+				<input type="text" id="payza_merchantid" name="payza_merchantid" size="60" value="<?php echo esc_attr($values['payza_merchantid'])?>" />
+			</td>
 		</tr>
+		<tr class="gateway gateway_payza" <?php if($gateway != "payza") { ?>style="display: none;"<?php } ?>>
+			<th scope="row" valign="top">
+				<label for="payza_securitycode"><?php _e('Security Code', 'pmpro');?>:</label>
+			</th>
+			<td>
+				<input type="text" id="payza_securitycode" name="payza_securitycode" size="60" value="<?php echo esc_attr($values['payza_securitycode'])?>" />
+			</td>
+		</tr>					
 		<?php
 		}
 
@@ -172,7 +187,7 @@
 		 */
 		static function pmpro_activation()
 		{
-			wp_schedule_event(time(), 'daily', 'pmpro_cron_example_subscription_updates');
+			wp_schedule_event(time(), 'daily', 'pmpro_cron_payza_subscription_updates');
 		}
 
 		/**
@@ -182,7 +197,7 @@
 		 */
 		static function pmpro_deactivation()
 		{
-			wp_clear_scheduled_hook('pmpro_cron_example_subscription_updates');
+			wp_clear_scheduled_hook('pmpro_cron_payza_subscription_updates');
 		}
 
 		/**
@@ -190,7 +205,7 @@
 		 *
 		 * @since 1.8
 		 */
-		static function pmpro_cron_example_subscription_updates()
+		static function pmpro_cron_payza_subscription_updates()
 		{
 		}
 
